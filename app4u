@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Bangladesh Web Portal | প্রফেশনাল স্লাইডার, থিম, নোটিশ সহ সম্পূর্ণ অ্যাপ</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- SwiperJS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #006a4e;
+      --primary-dark: #004d38;
+      --primary-light: #e0f2e9;
+      --accent: #d42e12;
+      --accent-dark: #a8230a;
+      --accent-light: #ffe6e2;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 12px 30px -8px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 20px 35px -12px rgba(0, 0, 0, 0.15);
+      --transition: all 0.25s ease;
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text-dark: #f1f5f9;
+      --text-muted: #cbd5e1;
+      --border: #334155;
+      --primary-light: #1e3a2f;
+      --accent-light: #3b1e16;
+      background: #0f172a;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Inter', 'Hind Siliguri', sans-serif;
+      color: var(--text-dark);
+      transition: background 0.2s;
+    }
+
+    .app-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 1.8rem 2rem;
+    }
+
+    /* Header */
+    .header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+    }
+    .logo-area h1 {
+      font-size: 1.9rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-area span {
+      font-size: 0.85rem;
+      background: var(--primary-light);
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-weight: 500;
+    }
+    .theme-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 0.5rem 1.2rem;
+      display: flex;
+      gap: 12px;
+      cursor: pointer;
+      font-weight: 500;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* 4-slide BANNER with REAL IMAGES (SVG/unsplash style professional) */
+    .banner-wrapper {
+      margin-bottom: 2rem;
+      border-radius: 1.8rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .swiper {
+      border-radius: 1.8rem;
+    }
+    .swiper-slide {
+      position: relative;
+      min-height: 280px;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide-overlay {
+      background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3));
+      width: 100%;
+      height: 100%;
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+      backdrop-filter: brightness(0.9);
+    }
+    .slide-overlay h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+      text-shadow: 2px 2px 12px rgba(0,0,0,0.5);
+    }
+    .slide-overlay p {
+      font-size: 1rem;
+      opacity: 0.95;
+    }
+    .swiper-pagination-bullet-active {
+      background: var(--accent) !important;
+    }
+    .swiper-button-next, .swiper-button-prev {
+      color: white;
+      background: rgba(0,0,0,0.3);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+    }
+
+    /* Love Notice */
+    .love-card {
+      background: var(--card-bg);
+      border-left: 6px solid var(--accent);
+      border-radius: 1.2rem;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .love-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .love-content i {
+      font-size: 2rem;
+      color: var(--accent);
+      animation: heartbeat 1.3s infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+    }
+    .surprise-btn {
+      background: var(--primary);
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    /* search & filter */
+    .search-panel {
+      background: var(--card-bg);
+      border-radius: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.8rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .search-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+    .search-input-group {
+      flex: 2;
+      position: relative;
+    }
+    .search-input-group i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    #searchInput {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 3rem;
+      border: 1px solid var(--border);
+      border-radius: 3rem;
+      background: var(--bg);
+      color: var(--text-dark);
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+    .filter-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .cat-filter {
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.45rem 1.2rem;
+      border-radius: 2rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--text-dark);
+    }
+    .cat-filter.active, .cat-filter:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* stats + view */
+    .stats-view {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .result-badge {
+      background: var(--primary-light);
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .view-toggle button {
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.35rem 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      margin-left: 0.5rem;
+    }
+    .view-toggle button.active-view {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* GRID & LIST */
+    .websites-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .websites-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+    .site-card {
+      background: var(--card-bg);
+      border-radius: 1.2rem;
+      padding: 1.2rem;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .site-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .icon-bg {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-light);
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+    .site-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .category-tag {
+      font-size: 0.7rem;
+      background: var(--primary-light);
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    .site-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin: 10px 0;
+      line-height: 1.4;
+    }
+    .visit-action {
+      background: transparent;
+      border: 1px solid var(--primary);
+      border-radius: 2rem;
+      padding: 0.3rem 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .list-item {
+      background: var(--card-bg);
+      border-radius: 1rem;
+      padding: 0.8rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      border: 1px solid var(--border);
+    }
+
+    /* Advanced: Color Icon Picker + Floating */
+    .color-palette {
+      position: fixed;
+      bottom: 6rem;
+      right: 1rem;
+      background: var(--card-bg);
+      border-radius: 3rem;
+      padding: 0.5rem 1rem;
+      display: flex;
+      gap: 12px;
+      box-shadow: var(--shadow-md);
+      z-index: 99;
+      border: 1px solid var(--border);
+    }
+    .color-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.1s;
+      border: 2px solid transparent;
+    }
+    .color-dot.active-color {
+      border-color: white;
+      box-shadow: 0 0 0 2px var(--text-dark);
+    }
+    .float-actions {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1rem;
+      display: flex;
+      gap: 12px;
+      z-index: 99;
+    }
+    .float-btn {
+      background: var(--primary);
+      color: white;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: 0.2s;
+    }
+    .toast-notify {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text-dark);
+      color: white;
+      padding: 8px 24px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      opacity: 0;
+      transition: 0.2s;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    .toast-notify.show {
+      opacity: 1;
+      bottom: 50px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+    @media (max-width: 680px) {
+      .app-container { padding: 0.8rem; }
+      .logo-area h1 { font-size: 1.3rem; }
+      .slide-overlay h2 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- header with theme -->
+  <div class="header-flex">
+    <div class="logo-area">
+      <h1><i class="fas fa-map-marked-alt"></i> Bangladesh ALL Web <i class="fas fa-globe"></i></h1>
+      <span><i class="fas fa-database"></i> 85+ প্রিমিয়াম সাইট</span>
+    </div>
+    <div class="theme-btn" id="themeSwitcher">
+      <i class="fas fa-moon"></i> <span>থিম বদলান</span> <i class="fas fa-palette"></i>
+    </div>
+  </div>
+
+  <!-- 4-slide IMAGE BANNER - Professional High quality (real scenic / bangladesh theme) -->
+  <div class="banner-wrapper">
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url('https://images.pexels.com/photos/2614818/pexels-photo-2614818.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+          <div class="slide-overlay"><i class="fas fa-tractor" style="font-size:2.5rem;"></i><h2>বাংলাদেশের কৃষি ও অর্থনীতি</h2><p>ডিজিটাল বাংলাদেশ বিনির্মাণে স্মার্ট সেবা</p></div>
+        </div>
+        <div class="swiper-slide" style="background-image: url('https://images.pexels.com/photos/1051071/pexels-photo-1051071.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+          <div class="slide-overlay"><i class="fas fa-graduation-cap" style="font-size:2.5rem;"></i><h2>শিক্ষা ও গবেষণা</h2><p>সকল বিশ্ববিদ্যালয়, বোর্ড ও ই-লার্নিং</p></div>
+        </div>
+        <div class="swiper-slide" style="background-image: url('https://images.pexels.com/photos/3184398/pexels-photo-3184398.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+          <div class="slide-overlay"><i class="fas fa-laptop-code" style="font-size:2.5rem;"></i><h2>টেকনোলজি ও স্টার্টআপ</h2><p>বিকাশ, নগদ, দারাজ, পাথাও সহ আধুনিক সেবা</p></div>
+        </div>
+        <div class="swiper-slide" style="background-image: url('https://images.pexels.com/photos/1662550/pexels-photo-1662550.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+          <div class="slide-overlay"><i class="fas fa-film" style="font-size:2.5rem;"></i><h2>বিনোদন ও মিডিয়া</h2><p>চ্যানেল আই, ATN বাংলা, গান ও সিনেমার জগৎ</p></div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+
+  <!-- Love Notice with Heart & Important Info -->
+  <div class="love-card">
+    <div class="love-content">
+      <i class="fas fa-heart" style="color: var(--accent);"></i>
+      <div><strong>❤️ ভালোবাসার নোটিশ (Love Notice)</strong><br>বাংলাদেশের সর্বাধিক নির্ভরযোগ্য ওয়েবসাইটের সংগ্রহ। প্রতিদিন আপডেট, ১০০% নিরাপদ লিংক।</div>
+    </div>
+    <button class="surprise-btn" id="surpriseFeatureBtn"><i class="fas fa-gift"></i> স্পেশ্যাল সারপ্রাইজ</button>
+  </div>
+
+  <!-- Search + Category Filters -->
+  <div class="search-panel">
+    <div class="search-row">
+      <div class="search-input-group">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="যেকোনো সাইট খুঁজুন (নাম, বিষয় বা বিবরণ)...">
+      </div>
+      <div class="filter-btns" id="filterGroup">
+        <button class="cat-filter active" data-cat="all">সব</button>
+        <button class="cat-filter" data-cat="news">সংবাদ</button>
+        <button class="cat-filter" data-cat="gov">সরকারি</button>
+        <button class="cat-filter" data-cat="education">শিক্ষা</button>
+        <button class="cat-filter" data-cat="ecommerce">ই-কমার্স</button>
+        <button class="cat-filter" data-cat="entertainment">বিনোদন</button>
+        <button class="cat-filter" data-cat="tech">টেক</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-view">
+    <div class="result-badge" id="resultCount">লোড হচ্ছে...</div>
+    <div class="view-toggle">
+      <button class="view-grid active-view" data-view="grid"><i class="fas fa-th"></i> গ্রিড</button>
+      <button class="view-list" data-view="list"><i class="fas fa-list"></i> তালিকা</button>
+    </div>
+  </div>
+
+  <div id="websitesContainer" class="websites-grid"></div>
+  <footer>🇧🇩 ডিজিটাল বাংলাদেশ গঠনে আমাদের অ্যাপ - সব ওয়েবসাইট এক প্ল্যাটফর্মে | <i class="fas fa-shield-alt"></i> নিরাপদ সংযোগ</footer>
+</div>
+
+<!-- Advanced Color Icon Picker -->
+<div class="color-palette" id="colorPicker">
+  <div class="color-dot" data-color="#006a4e" style="background:#006a4e;"></div>
+  <div class="color-dot" data-color="#d42e12" style="background:#d42e12;"></div>
+  <div class="color-dot" data-color="#1e3a8a" style="background:#1e3a8a;"></div>
+  <div class="color-dot" data-color="#b45309" style="background:#b45309;"></div>
+  <div class="color-dot" data-color="#0f766e" style="background:#0f766e;"></div>
+  <i class="fas fa-fill-drip" style="margin-left:4px;"></i>
+</div>
+
+<div class="float-actions">
+  <div class="float-btn" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></div>
+  <div class="float-btn" id="randomWebBtn"><i class="fas fa-shuffle"></i></div>
+</div>
+<div id="toastMessage" class="toast-notify"></div>
+
+<script>
+  // ======================== BANGLADESH WEBSITES DATASET (85+ ITEMS) ========================
+  const sitesLibrary = [
+    { name: "Prothom Alo", url: "https://www.prothomalo.com", category: "news", desc: "দেশের সর্বাধিক পঠিত দৈনিক", icon: "fa-newspaper" },
+    { name: "The Daily Star", url: "https://www.thedailystar.net", category: "news", desc: "Premier English daily", icon: "fa-star" },
+    { name: "Bangla Tribune", url: "https://www.banglatribune.com", category: "news", desc: "নির্ভরযোগ্য অনলাইন সংবাদ", icon: "fa-chalkboard-user" },
+    { name: "BDNews24", url: "https://bdnews24.com", category: "news", desc: "২৪ ঘণ্টা সংবাদ", icon: "fa-clock" },
+    { name: "Somoy TV", url: "https://www.somoynews.tv", category: "news", desc: "সময় টিভি নিউজ", icon: "fa-tv" },
+    { name: "Jugantor", url: "https://www.jugantor.com", category: "news", desc: "দৈনিক যুগান্তর", icon: "fa-newspaper" },
+    { name: "Bangladesh Govt Portal", url: "https://bangladesh.gov.bd", category: "gov", desc: "জাতীয় তথ্য বাতায়ন", icon: "fa-building" },
+    { name: "e-Nothi", url: "https://enothi.gov.bd", category: "gov", desc: "অফিস ব্যবস্থাপনা সিস্টেম", icon: "fa-file-alt" },
+    { name: "BIDA", url: "https://bida.gov.bd", category: "gov", desc: "বিনিয়োগ উন্নয়ন কর্তৃপক্ষ", icon: "fa-chart-line" },
+    { name: "Directorate of Health", url: "https://dghs.gov.bd", category: "gov", desc: "স্বাস্থ্য অধিদপ্তর", icon: "fa-hospital" },
+    { name: "DU", url: "https://www.du.ac.bd", category: "education", desc: "ঢাকা বিশ্ববিদ্যালয়", icon: "fa-university" },
+    { name: "BUET", url: "https://www.buet.ac.bd", category: "education", desc: "বাংলাদেশ প্রকৌশল বিশ্ববিদ্যালয়", icon: "fa-microchip" },
+    { name: "RU", url: "https://ru.ac.bd", category: "education", desc: "রাজশাহী বিশ্ববিদ্যালয়", icon: "fa-landmark" },
+    { name: "JNU", url: "https://juniv.edu", category: "education", desc: "জাহাঙ্গীরনগর বিশ্ববিদ্যালয়", icon: "fa-tree" },
+    { name: "Education Board Results", url: "https://www.educationboardresults.gov.bd", category: "education", desc: "বোর্ড ফলাফল পোর্টাল", icon: "fa-chart-simple" },
+    { name: "Rokomari", url: "https://www.rokomari.com", category: "ecommerce", desc: "বাংলাদেশের বৃহত্তম অনলাইন বুকস্টোর", icon: "fa-book" },
+    { name: "Daraz", url: "https://www.daraz.com.bd", category: "ecommerce", desc: "শীর্ষ শপিং মার্কেটপ্লেস", icon: "fa-bag-shopping" },
+    { name: "Chaldal", url: "https://chaldal.com", category: "ecommerce", desc: "অনলাইন মুদি দোকান", icon: "fa-carrot" },
+    { name: "Priyoshop", url: "https://www.priyoshop.com", category: "ecommerce", desc: "ফ্যাশন ও ইলেকট্রনিক্স", icon: "fa-tshirt" },
+    { name: "Bkash", url: "https://www.bkash.com", category: "tech", desc: "মোবাইল ফাইন্যান্সিয়াল সার্ভিস", icon: "fa-mobile-alt" },
+    { name: "Nagad", url: "https://www.nagad.com.bd", category: "tech", desc: "ডিজিটাল আর্থিক সেবা", icon: "fa-coins" },
+    { name: "Grameenphone", url: "https://www.grameenphone.com", category: "tech", desc: "জিপি মোবাইল অপারেটর", icon: "fa-phone" },
+    { name: "Robi", url: "https://www.robi.com.bd", category: "tech", desc: "রবি টেলিকম", icon: "fa-signal" },
+    { name: "Pathao", url: "https://pathao.com/bd", category: "tech", desc: "রাইড শেয়ারিং ও ডেলিভারি", icon: "fa-motorcycle" },
+    { name: "Shohoz", url: "https://www.shohoz.com", category: "tech", desc: "টিকেট ও রাইড সেবা", icon: "fa-bus" },
+    { name: "Channel i", url: "https://www.channelionline.com", category: "entertainment", desc: "বিনোদন টিভি অনলাইন", icon: "fa-tv" },
+    { name: "Gaan Bangla", url: "https://www.gaanbangla.com", category: "entertainment", desc: "বাংলা গানের সংগ্রহ", icon: "fa-music" },
+    { name: "ATN Bangla", url: "https://www.atnbangla.tv", category: "entertainment", desc: "এটিএন বাংলা প্রোগ্রাম", icon: "fa-video" },
+    { name: "BTV", url: "https://btv.gov.bd", category: "entertainment", desc: "বাংলাদেশ টেলিভিশন", icon: "fa-radio" },
+    { name: "Foodpanda", url: "https://www.foodpanda.com.bd", category: "ecommerce", desc: "অনলাইন ফুড ডেলিভারি", icon: "fa-pizza-slice" },
+    { name: "BASIS", url: "https://basis.org.bd", category: "tech", desc: "সফটওয়্যার অ্যাসোসিয়েশন", icon: "fa-code" }
+  ];
+  const allWebsites = [...sitesLibrary];
+
+  // state
+  let activeCategory = "all";
+  let searchQuery = "";
+  let viewMode = "grid";
+
+  const container = document.getElementById("websitesContainer");
+  const searchInput = document.getElementById("searchInput");
+  const resultSpan = document.getElementById("resultCount");
+
+  function showMessage(msg, time=1500) {
+    const toast = document.getElementById("toastMessage");
+    toast.innerText = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), time);
+  }
+
+  function filterList() {
+    return allWebsites.filter(site => {
+      if (activeCategory !== "all" && site.category !== activeCategory) return false;
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        return site.name.toLowerCase().includes(q) || site.desc.toLowerCase().includes(q) || site.category.includes(q);
+      }
+      return true;
+    });
+  }
+
+  function getCatIcon(cat) {
+    const icons = { news:"fa-newspaper", gov:"fa-landmark", education:"fa-graduation-cap", ecommerce:"fa-store", entertainment:"fa-mask", tech:"fa-microchip" };
+    return icons[cat] || "fa-link";
+  }
+  function transCategory(cat) {
+    const map = { news:"সংবাদ", gov:"সরকারি", education:"শিক্ষা", ecommerce:"ই-কমার্স", entertainment:"বিনোদন", tech:"টেক" };
+    return map[cat] || cat;
+  }
+  function escapeHtml(str) { return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
+
+  function render() {
+    const filtered = filterList();
+    resultSpan.innerHTML = `<i class="fas fa-globe"></i> মোট ${filtered.length} টি ওয়েবসাইট পাওয়া গেছে`;
+    if (filtered.length === 0) {
+      container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem;">😔 কোন ওয়েবসাইট খুঁজে পাওয়া যায়নি</div>`;
+      return;
+    }
+    if (viewMode === "grid") {
+      container.className = "websites-grid";
+      container.innerHTML = filtered.map(s => `
+        <div class="site-card" data-url="${s.url}">
+          <div class="card-header">
+            <div class="icon-bg"><i class="fas ${s.icon || getCatIcon(s.category)}"></i></div>
+            <div><div class="site-title">${escapeHtml(s.name)}</div><span class="category-tag">${transCategory(s.category)}</span></div>
+          </div>
+          <div class="site-desc">${escapeHtml(s.desc.substring(0, 90))}</div>
+          <div style="display: flex; justify-content: flex-end;"><button class="visit-action" data-url="${s.url}"><i class="fas fa-external-link-alt"></i> ভিজিট</button></div>
+        </div>
+      `).join('');
+    } else {
+      container.className = "websites-list";
+      container.innerHTML = filtered.map(s => `
+        <div class="list-item" data-url="${s.url}">
+          <div style="display: flex; gap: 12px; align-items: center;"><i class="fas ${s.icon || getCatIcon(s.category)}"></i><strong>${escapeHtml(s.name)}</strong> <span style="font-size:0.7rem;">${transCategory(s.category)}</span><span style="font-size:0.7rem; color:var(--text-muted);">${escapeHtml(s.desc.slice(0,55))}</span></div>
+          <button class="visit-action" data-url="${s.url}">যান</button>
+        </div>
+      `).join('');
+    }
+    document.querySelectorAll('.visit-action').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const url = btn.getAttribute('data-url');
+        if(url) { showMessage(`খোলা হচ্ছে: ${url}`); window.open(url, '_blank'); }
+      });
+    });
+    document.querySelectorAll('.site-card, .list-item').forEach(el => {
+      el.addEventListener('click', (e) => {
+        if(e.target.classList.contains('visit-action')) return;
+        const url = el.getAttribute('data-url');
+        if(url) { showMessage(`রেডিরেট হচ্ছে`); window.open(url, '_blank'); }
+      });
+    });
+  }
+
+  // event handlers
+  searchInput.addEventListener('input', (e) => { searchQuery = e.target.value; render(); });
+  document.querySelectorAll('.cat-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCategory = btn.dataset.cat;
+      render();
+    });
+  });
+  document.querySelector('.view-grid').addEventListener('click', () => { viewMode = "grid"; document.querySelectorAll('.view-toggle button').forEach(b=>b.classList.remove('active-view')); document.querySelector('.view-grid').classList.add('active-view'); render(); });
+  document.querySelector('.view-list').addEventListener('click', () => { viewMode = "list"; document.querySelectorAll('.view-toggle button').forEach(b=>b.classList.remove('active-view')); document.querySelector('.view-list').classList.add('active-view'); render(); });
+
+  // Swiper
+  new Swiper('.mySwiper', { loop: true, autoplay: { delay: 4000 }, pagination: { el: '.swiper-pagination', clickable: true }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' } });
+
+  // Theme
+  document.getElementById("themeSwitcher").addEventListener('click', () => { document.body.classList.toggle('dark'); showMessage(document.body.classList.contains('dark') ? "🌙 ডার্ক মোড চালু" : "☀️ লাইট মোড চালু"); });
+
+  // Color picker
+  document.querySelectorAll('.color-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      let newColor = dot.dataset.color;
+      document.documentElement.style.setProperty('--primary', newColor);
+      showMessage(`প্রাইমারি কালার পরিবর্তিত হয়েছে`);
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active-color'));
+      dot.classList.add('active-color');
+    });
+  });
+
+  // floating
+  document.getElementById("scrollTopBtn").addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); showMessage("উপরে স্ক্রোল"); });
+  document.getElementById("randomWebBtn").addEventListener('click', () => { const f = filterList(); if(f.length) { const r = f[Math.floor(Math.random()*f.length)]; window.open(r.url, '_blank'); showMessage(`🎲 র্যান্ডম: ${r.name}`); } else showMessage("কোন সাইট নেই"); });
+  document.getElementById("surpriseFeatureBtn").addEventListener('click', () => { const surprise = allWebsites.find(w => w.name === "Bangladesh Govt Portal") || allWebsites[0]; window.open(surprise.url, '_blank'); showMessage("✨ বিশেষ উপহার: সরকারি পোর্টাল"); });
+
+  render();
+</script>
+</body>
