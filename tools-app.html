@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>মিনি টুলস অ্যাপ</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg2: #f5f5f4;
+    --bg3: #ededeb;
+    --text: #1a1a1a;
+    --text2: #6b7280;
+    --border: rgba(0,0,0,0.12);
+    --border2: rgba(0,0,0,0.22);
+    --info-bg: #e6f1fb;
+    --info-text: #0c447c;
+    --success-bg: #eaf3de;
+    --success-text: #3b6d11;
+    --danger-text: #a32d2d;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1b;
+      --bg2: #242423;
+      --bg3: #2c2c2a;
+      --text: #f0f0ee;
+      --text2: #9ca3af;
+      --border: rgba(255,255,255,0.10);
+      --border2: rgba(255,255,255,0.20);
+      --info-bg: #042c53;
+      --info-text: #85b7eb;
+      --success-bg: #173404;
+      --success-text: #97c459;
+      --danger-text: #f09595;
+      --shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+  }
+
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg3);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .container { max-width: 760px; margin: 0 auto; }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+  }
+
+  h1 .icon-wrap {
+    width: 36px; height: 36px;
+    background: var(--text);
+    color: var(--bg);
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .tab {
+    padding: 7px 14px;
+    font-size: 13px;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius-md);
+    background: var(--bg);
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .tab.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+    font-weight: 500;
+  }
+
+  .tab:hover:not(.active) { background: var(--bg2); color: var(--text); }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .card {
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+
+  .section-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  label {
+    font-size: 13px;
+    color: var(--text2);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  input[type=text], input[type=number], textarea, select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--bg2);
+    color: var(--text);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius-md);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  input:focus, textarea:focus { border-color: var(--text2); }
+
+  textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius-md);
+    background: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: all 0.15s;
+  }
+
+  .btn:hover { background: var(--bg2); }
+  .btn:active { transform: scale(0.98); }
+
+  .btn-primary {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .btn-primary:hover { opacity: 0.85; background: var(--text); }
+
+  .row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+  .grow { flex: 1; min-width: 140px; }
+
+  .output {
+    background: var(--bg2);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    font-size: 13px;
+    font-family: "SF Mono", "Fira Code", Consolas, monospace;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-all;
+    min-height: 44px;
+    line-height: 1.6;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+    margin-top: 1rem;
+  }
+
+  .stat {
+    background: var(--bg2);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+  }
+
+  .stat-label { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
+  .stat-val { font-size: 20px; font-weight: 500; color: var(--text); }
+
+  .output-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .copy-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius-md);
+    background: transparent;
+    cursor: pointer;
+    color: var(--text2);
+    display: inline-flex; align-items: center; gap: 4px;
+    transition: all 0.15s;
+  }
+
+  .copy-btn:hover { background: var(--bg2); color: var(--text); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 11px;
+    border-radius: var(--radius-md);
+    background: var(--info-bg);
+    color: var(--info-text);
+  }
+
+  mark {
+    background: #FAC775;
+    color: #412402;
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+
+  .status-ok { color: var(--success-text); font-size: 12px; }
+  .status-err { color: var(--danger-text); font-size: 12px; }
+
+  .divider {
+    border: none;
+    border-top: 0.5px solid var(--border);
+    margin: 1rem 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>
+    <span class="icon-wrap"><i class="ti ti-tools" aria-hidden="true"></i></span>
+    মিনি টুলস অ্যাপ
+  </h1>
+
+  <nav class="nav" role="tablist">
+    <button class="tab active" role="tab" onclick="switchTab('word', this)"><i class="ti ti-file-text" aria-hidden="true"></i> ওয়ার্ড কাউন্টার</button>
+    <button class="tab" role="tab" onclick="switchTab('hash', this)"><i class="ti ti-lock" aria-hidden="true"></i> হ্যাশ জেনারেটর</button>
+    <button class="tab" role="tab" onclick="switchTab('color', this)"><i class="ti ti-palette" aria-hidden="true"></i> কালার কনভার্টার</button>
+    <button class="tab" role="tab" onclick="switchTab('json', this)"><i class="ti ti-braces" aria-hidden="true"></i> JSON ফরম্যাটার</button>
+    <button class="tab" role="tab" onclick="switchTab('base64', this)"><i class="ti ti-code" aria-hidden="true"></i> Base64</button>
+    <button class="tab" role="tab" onclick="switchTab('regex', this)"><i class="ti ti-search" aria-hidden="true"></i> রেজেক্স টেস্টার</button>
+  </nav>
+
+  <!-- Word Counter -->
+  <div id="panel-word" class="panel active" role="tabpanel">
+    <div class="card">
+      <div class="section-title"><i class="ti ti-file-text" aria-hidden="true"></i> ওয়ার্ড কাউন্টার</div>
+      <label for="wc-input">টেক্সট লিখো বা পেস্ট করো</label>
+      <textarea id="wc-input" placeholder="এখানে লেখো..." oninput="countWords()"></textarea>
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-label">শব্দ</div><div class="stat-val" id="wc-words">0</div></div>
+        <div class="stat"><div class="stat-label">অক্ষর</div><div class="stat-val" id="wc-chars">0</div></div>
+        <div class="stat"><div class="stat-label">স্পেস বাদে</div><div class="stat-val" id="wc-nospace">0</div></div>
+        <div class="stat"><div class="stat-label">লাইন</div><div class="stat-val" id="wc-lines">0</div></div>
+        <div class="stat"><div class="stat-label">বাক্য</div><div class="stat-val" id="wc-sentences">0</div></div>
+        <div class="stat"><div class="stat-label">পড়ার সময়</div><div class="stat-val" id="wc-time">0s</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hash Generator -->
+  <div id="panel-hash" class="panel" role="tabpanel">
+    <div class="card">
+      <div class="section-title"><i class="ti ti-lock" aria-hidden="true"></i> হ্যাশ জেনারেটর</div>
+      <label for="hash-input">ইনপুট টেক্সট</label>
+      <input type="text" id="hash-input" placeholder="টেক্সট লেখো..." oninput="generateHashes()" />
+      <div style="margin-top:1rem;display:flex;flex-direction:column;gap:12px;">
+        <div>
+          <div class="output-header">
+            <span style="font-size:12px;color:var(--text2);">MD5 <span class="badge">সিম্পল</span></span>
+            <button class="copy-btn" onclick="copyText('hash-md5', this)"><i class="ti ti-copy"></i> কপি</button>
+          </div>
+          <div class="output" id="hash-md5">—</div>
+        </div>
+        <div>
+          <div class="output-header">
+            <span style="font-size:12px;color:var(--text2);">SHA-256 <span class="badge">নিরাপদ</span></span>
+            <button class="copy-btn" onclick="copyText('hash-sha256', this)"><i class="ti ti-copy"></i> কপি</button>
+          </div>
+          <div class="output" id="hash-sha256">—</div>
+        </div>
+        <div>
+          <div class="output-header">
+            <span style="font-size:12px;color:var(--text2);">SHA-1</span>
+            <button class="copy-btn" onclick="copyText('hash-sha1', this)"><i class="ti ti-copy"></i> কপি</button>
+          </div>
+          <div class="output" id="hash-sha1">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Color Converter -->
+  <div id="panel-color" class="panel" role="tabpanel">
+    <div class="card">
+      <div class="section-title"><i class="ti ti-palette" aria-hidden="true"></i> কালার কনভার্টার</div>
+      <div class="row" style="margin-bottom:1rem;">
+        <div class="grow">
+          <label for="color-hex">HEX কোড</label>
+          <input type="text" id="color-hex" placeholder="#1a2b3c" oninput="convertColor()" />
+        </div>
+        <div>
+          <label>পিকার</label>
+          <input type="color" id="color-picker" oninput="pickColor(this.value)"
+            style="width:48px;height:38px;border:0.5px solid var(--border2);border-radius:var(--radius-md);cursor:pointer;padding:2px;background:var(--bg2);" />
+        </div>
+      </div>
+      <div id="color-preview" style="height:52px;border-radius:var(--radius-md);border:0.5px solid var(--border);margin-bottom:1rem;transition:background 0.2s;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <div class="output-header"><label style="margin:0;">RGB</label><button class="copy-btn" onclick="copyText('color-rgb',this)"><i class="ti ti-copy"></i> কপি</button></div>
+          <div class="output" id="color-rgb">—</div>
+        </div>
+        <div>
+          <div class="output-header"><label style="margin:0;">HSL</label><button class="copy-btn" onclick="copyText('color-hsl',this)"><i class="ti ti-copy"></i> কপি</button></div>
+          <div class="output" id="color-hsl">—</div>
+        </div>
+        <div>
+          <div class="output-header"><label style="margin:0;">RGBA</label><button class="copy-btn" onclick="copyText('color-rgba',this)"><i class="ti ti-copy"></i> কপি</button></div>
+          <div class="output" id="color-rgba">—</div>
+        </div>
+        <div>
+          <div class="output-header"><label style="margin:0;">CSS Variable</label><button class="copy-btn" onclick="copyText('color-css',this)"><i class="ti ti-copy"></i> কপি</button></div>
+          <div class="output" id="color-css">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JSON Formatter -->
+  <div id="panel-json" class="panel" role="tabpanel">
+    <div class="card">
+      <div class="section-title"><i class="ti ti-braces" aria-hidden="true"></i> JSON ফরম্যাটার</div>
+      <label for="json-input">JSON পেস্ট করো</label>
+      <textarea id="json-input" placeholder='{"name":"রাহেলা","age":25}'></textarea>
+      <div class="row" style="margin-top:0.75rem;">
+        <button class="btn btn-primary" onclick="formatJSON()"><i class="ti ti-wand"></i> ফরম্যাট</button>
+        <button class="btn" onclick="minifyJSON()"><i class="ti ti-minimize"></i> মিনিফাই</button>
+        <button class="btn" onclick="validateJSON()"><i class="ti ti-check"></i> ভ্যালিডেট</button>
+        <button class="copy-btn" style="margin-left:auto;" onclick="copyText('json-output',this)"><i class="ti ti-copy"></i> কপি</button>
+      </div>
+      <div id="json-status" style="margin:8px 0;font-size:12px;min-height:18px;"></div>
+      <div class="output" id="json-output" style="max-height:320px;overflow-y:auto;">আউটপুট এখানে আসবে</div>
+    </div>
+  </div>
+
+  <!-- Base64 -->
+  <div id="panel-base64" class="panel" role="tabpanel">
+    <div class="card">
+      <div class="section-title"><i class="ti ti-code" aria-hidden="true"></i> Base64 এনকোড / ডিকোড</div>
+      <label for="b64-input">ইনপুট</label>
+      <textarea id="b64-input" placeholder="টেক্সট লেখো..."></textarea>
+      <div class="row" style="margin-top:0.75rem;">
+        <button class="btn btn-primary" onclick="encodeB64()"><i class="ti ti-lock"></i> এনকোড</button>
+        <button class="btn" onclick="decodeB64()"><i class="ti ti-lock-open"></i> ডিকোড</button>
+        <button class="btn" onclick="swapB64()"><i class="ti ti-arrows-exchange"></i> সোয়াপ</button>
+      </div>
+      <hr class="divider" />
+      <div class="output-header">
+        <label style="margin:0;">আউটপুট</label>
+        <button class="copy-btn" onclick="copyText('b64-output',this)"><i class="ti ti-copy"></i> কপি</button>
+      </div>
+      <div class="output" id="b64-output">আউটপুট এখানে আসবে</div>
+    </div>
+  </div>
+
+  <!-- Regex Tester -->
+  <div id="panel-regex" class="panel" role="tabpanel">
+    <div class="card">
+      <div class="section-title"><i class="ti ti-search" aria-hidden="true"></i> রেজেক্স টেস্টার</div>
+      <div class="row" style="margin-bottom:1rem;">
+        <div class="grow">
+          <label for="rx-pattern">রেজেক্স প্যাটার্ন</label>
+          <input type="text" id="rx-pattern" placeholder="\d+" oninput="testRegex()" />
+        </div>
+        <div style="width:80px;">
+          <label for="rx-flags">ফ্ল্যাগ</label>
+          <input type="text" id="rx-flags" value="gi" oninput="testRegex()" />
+        </div>
+      </div>
+      <label for="rx-text">টেস্ট টেক্সট</label>
+      <textarea id="rx-text" placeholder="এখানে টেস্ট করার টেক্সট লেখো..." oninput="testRegex()"></textarea>
+      <div class="stat-grid" style="margin-top:1rem;">
+        <div class="stat"><div class="stat-label">ম্যাচ পাওয়া</div><div class="stat-val" id="rx-count">0</div></div>
+        <div class="stat" style="grid-column:span 2;">
+          <div class="stat-label">ম্যাচ লিস্ট</div>
+          <div id="rx-matches" style="font-size:13px;color:var(--text);margin-top:4px;">—</div>
+        </div>
+      </div>
+      <div id="rx-highlighted" style="margin-top:1rem;padding:0.75rem;background:var(--bg2);border-radius:var(--radius-md);font-size:13px;line-height:1.8;word-break:break-all;min-height:44px;"></div>
+      <div id="rx-error" style="color:var(--danger-text);font-size:12px;margin-top:6px;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+/* ── Word Counter ── */
+function countWords() {
+  const txt = document.getElementById('wc-input').value;
+  const words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+  const chars = txt.length;
+  const nospace = txt.replace(/\s/g, '').length;
+  const lines = txt ? txt.split('\n').length : 0;
+  const sentences = txt.trim() ? (txt.match(/[।.!?]+/g) || []).length : 0;
+  const time = words > 0 ? (words < 200 ? Math.round(words / 3) + 's' : Math.round(words / 200) + 'min') : '0s';
+  document.getElementById('wc-words').textContent = words;
+  document.getElementById('wc-chars').textContent = chars;
+  document.getElementById('wc-nospace').textContent = nospace;
+  document.getElementById('wc-lines').textContent = lines;
+  document.getElementById('wc-sentences').textContent = sentences;
+  document.getElementById('wc-time').textContent = time;
+}
+
+/* ── Hash Generator ── */
+async function sha(algo, msg) {
+  const enc = new TextEncoder().encode(msg);
+  const buf = await crypto.subtle.digest(algo, enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function md5(s) {
+  function safeAdd(x, y) { const lsw = (x & 0xFFFF) + (y & 0xFFFF); return (((x >> 16) + (y >> 16) + (lsw >> 16)) << 16) | (lsw & 0xFFFF); }
+  function bitRotateLeft(num, cnt) { return (num << cnt) | (num >>> (32 - cnt)); }
+  function md5cmn(q, a, b, x, s, t) { return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b); }
+  function md5ff(a,b,c,d,x,s,t){return md5cmn((b&c)|((~b)&d),a,b,x,s,t);}
+  function md5gg(a,b,c,d,x,s,t){return md5cmn((b&d)|(c&(~d)),a,b,x,s,t);}
+  function md5hh(a,b,c,d,x,s,t){return md5cmn(b^c^d,a,b,x,s,t);}
+  function md5ii(a,b,c,d,x,s,t){return md5cmn(c^(b|(~d)),a,b,x,s,t);}
+  const b = unescape(encodeURIComponent(s));
+  const nblks = ((b.length + 8) >> 6) + 1;
+  const blks = new Array(nblks * 16).fill(0);
+  for (let i = 0; i < b.length; i++) blks[i >> 2] |= b.charCodeAt(i) << ((i % 4) * 8);
+  blks[b.length >> 2] |= 0x80 << ((b.length % 4) * 8);
+  blks[nblks * 16 - 2] = b.length * 8;
+  let a = 1732584193, bb = -271733879, c = -1732584194, d = 271733878;
+  for (let i = 0; i < blks.length; i += 16) {
+    const [oa, ob, oc, od] = [a, bb, c, d];
+    a=md5ff(a,bb,c,d,blks[i],7,-680876936);d=md5ff(d,a,bb,c,blks[i+1],12,-389564586);c=md5ff(c,d,a,bb,blks[i+2],17,606105819);bb=md5ff(bb,c,d,a,blks[i+3],22,-1044525330);
+    a=md5ff(a,bb,c,d,blks[i+4],7,-176418897);d=md5ff(d,a,bb,c,blks[i+5],12,1200080426);c=md5ff(c,d,a,bb,blks[i+6],17,-1473231341);bb=md5ff(bb,c,d,a,blks[i+7],22,-45705983);
+    a=md5ff(a,bb,c,d,blks[i+8],7,1770035416);d=md5ff(d,a,bb,c,blks[i+9],12,-1958414417);c=md5ff(c,d,a,bb,blks[i+10],17,-42063);bb=md5ff(bb,c,d,a,blks[i+11],22,-1990404162);
+    a=md5ff(a,bb,c,d,blks[i+12],7,1804603682);d=md5ff(d,a,bb,c,blks[i+13],12,-40341101);c=md5ff(c,d,a,bb,blks[i+14],17,-1502002290);bb=md5ff(bb,c,d,a,blks[i+15],22,1236535329);
+    a=md5gg(a,bb,c,d,blks[i+1],5,-165796510);d=md5gg(d,a,bb,c,blks[i+6],9,-1069501632);c=md5gg(c,d,a,bb,blks[i+11],14,643717713);bb=md5gg(bb,c,d,a,blks[i],20,-373897302);
+    a=md5gg(a,bb,c,d,blks[i+5],5,-701558691);d=md5gg(d,a,bb,c,blks[i+10],9,38016083);c=md5gg(c,d,a,bb,blks[i+15],14,-660478335);bb=md5gg(bb,c,d,a,blks[i+4],20,-405537848);
+    a=md5gg(a,bb,c,d,blks[i+9],5,568446438);d=md5gg(d,a,bb,c,blks[i+14],9,-1019803690);c=md5gg(c,d,a,bb,blks[i+3],14,-187363961);bb=md5gg(bb,c,d,a,blks[i+8],20,1163531501);
+    a=md5gg(a,bb,c,d,blks[i+13],5,-1444681467);d=md5gg(d,a,bb,c,blks[i+2],9,-51403784);c=md5gg(c,d,a,bb,blks[i+7],14,1735328473);bb=md5gg(bb,c,d,a,blks[i+12],20,-1926607734);
+    a=md5hh(a,bb,c,d,blks[i+5],4,-378558);d=md5hh(d,a,bb,c,blks[i+8],11,-2022574463);c=md5hh(c,d,a,bb,blks[i+11],16,1839030562);bb=md5hh(bb,c,d,a,blks[i+14],23,-35309556);
+    a=md5hh(a,bb,c,d,blks[i+1],4,-1530992060);d=md5hh(d,a,bb,c,blks[i+4],11,1272893353);c=md5hh(c,d,a,bb,blks[i+7],16,-155497632);bb=md5hh(bb,c,d,a,blks[i+10],23,-1094730640);
+    a=md5hh(a,bb,c,d,blks[i+13],4,681279174);d=md5hh(d,a,bb,c,blks[i],11,-358537222);c=md5hh(c,d,a,bb,blks[i+3],16,-722521979);bb=md5hh(bb,c,d,a,blks[i+6],23,76029189);
+    a=md5hh(a,bb,c,d,blks[i+9],4,-640364487);d=md5hh(d,a,bb,c,blks[i+12],11,-421815835);c=md5hh(c,d,a,bb,blks[i+15],16,530742520);bb=md5hh(bb,c,d,a,blks[i+2],23,-995338651);
+    a=md5ii(a,bb,c,d,blks[i],6,-198630844);d=md5ii(d,a,bb,c,blks[i+7],10,1126891415);c=md5ii(c,d,a,bb,blks[i+14],15,-1416354905);bb=md5ii(bb,c,d,a,blks[i+5],21,-57434055);
+    a=md5ii(a,bb,c,d,blks[i+12],6,1700485571);d=md5ii(d,a,bb,c,blks[i+3],10,-1894986606);c=md5ii(c,d,a,bb,blks[i+10],15,-1051523);bb=md5ii(bb,c,d,a,blks[i+1],21,-2054922799);
+    a=md5ii(a,bb,c,d,blks[i+8],6,1873313359);d=md5ii(d,a,bb,c,blks[i+15],10,-30611744);c=md5ii(c,d,a,bb,blks[i+6],15,-1560198380);bb=md5ii(bb,c,d,a,blks[i+13],21,1309151649);
+    a=md5ii(a,bb,c,d,blks[i+4],6,-145523070);d=md5ii(d,a,bb,c,blks[i+11],10,-1120210379);c=md5ii(c,d,a,bb,blks[i+2],15,718787259);bb=md5ii(bb,c,d,a,blks[i+9],21,-343485551);
+    a=safeAdd(a,oa);bb=safeAdd(bb,ob);c=safeAdd(c,oc);d=safeAdd(d,od);
+  }
+  return [a,bb,c,d].map(n => Array.from({length:4}, (_,i) => ((n >> (i * 8)) & 0xFF).toString(16).padStart(2,'0')).join('')).join('');
+}
+
+async function generateHashes() {
+  const v = document.getElementById('hash-input').value;
+  if (!v) { ['md5','sha256','sha1'].forEach(id => document.getElementById('hash-' + id).textContent = '—'); return; }
+  document.getElementById('hash-md5').textContent = md5(v);
+  document.getElementById('hash-sha256').textContent = await sha('SHA-256', v);
+  document.getElementById('hash-sha1').textContent = await sha('SHA-1', v);
+}
+
+/* ── Color Converter ── */
+function convertColor() {
+  const hex = document.getElementById('color-hex').value.trim().replace('#', '');
+  if (!/^[0-9a-fA-F]{6}$/.test(hex)) return;
+  const r = parseInt(hex.slice(0,2),16), g = parseInt(hex.slice(2,4),16), b = parseInt(hex.slice(4,6),16);
+  const rn = r/255, gn = g/255, bn = b/255;
+  const max = Math.max(rn,gn,bn), min = Math.min(rn,gn,bn), diff = max - min;
+  const l = (max + min) / 2;
+  const s = diff === 0 ? 0 : (l > 0.5 ? diff / (2 - max - min) : diff / (max + min));
+  let h = 0;
+  if (diff !== 0) { h = max===rn ? ((gn-bn)/diff) % 6 : max===gn ? (bn-rn)/diff+2 : (rn-gn)/diff+4; h = Math.round(h * 60); if (h < 0) h += 360; }
+  document.getElementById('color-rgb').textContent = `rgb(${r}, ${g}, ${b})`;
+  document.getElementById('color-hsl').textContent = `hsl(${h}, ${Math.round(s*100)}%, ${Math.round(l*100)}%)`;
+  document.getElementById('color-rgba').textContent = `rgba(${r}, ${g}, ${b}, 1)`;
+  document.getElementById('color-css').textContent = `--my-color: #${hex};`;
+  document.getElementById('color-preview').style.background = `#${hex}`;
+  document.getElementById('color-picker').value = `#${hex}`;
+}
+
+function pickColor(v) {
+  document.getElementById('color-hex').value = v;
+  convertColor();
+}
+
+/* ── JSON Formatter ── */
+function formatJSON() {
+  try {
+    const parsed = JSON.parse(document.getElementById('json-input').value);
+    document.getElementById('json-output').textContent = JSON.stringify(parsed, null, 2);
+    setStatus('✓ ভ্যালিড JSON — ফরম্যাট সম্পন্ন', 'ok');
+  } catch(e) { setStatus('✗ ' + e.message, 'err'); }
+}
+
+function minifyJSON() {
+  try {
+    document.getElementById('json-output').textContent = JSON.stringify(JSON.parse(document.getElementById('json-input').value));
+    setStatus('✓ মিনিফাই সম্পন্ন', 'ok');
+  } catch(e) { setStatus('✗ ' + e.message, 'err'); }
+}
+
+function validateJSON() {
+  try {
+    JSON.parse(document.getElementById('json-input').value);
+    setStatus('✓ JSON সম্পূর্ণ ঠিক আছে!', 'ok');
+  } catch(e) { setStatus('✗ ভুল আছে: ' + e.message, 'err'); }
+}
+
+function setStatus(msg, type) {
+  const el = document.getElementById('json-status');
+  el.textContent = msg;
+  el.className = 'status-' + type;
+}
+
+/* ── Base64 ── */
+function encodeB64() {
+  try { document.getElementById('b64-output').textContent = btoa(unescape(encodeURIComponent(document.getElementById('b64-input').value))); }
+  catch(e) { document.getElementById('b64-output').textContent = 'এনকোড করা গেলো না: ' + e.message; }
+}
+
+function decodeB64() {
+  try { document.getElementById('b64-output').textContent = decodeURIComponent(escape(atob(document.getElementById('b64-input').value))); }
+  catch(e) { document.getElementById('b64-output').textContent = 'ডিকোড করা গেলো না: ' + e.message; }
+}
+
+function swapB64() {
+  const i = document.getElementById('b64-input');
+  const o = document.getElementById('b64-output');
+  const tmp = i.value;
+  i.value = o.textContent;
+  o.textContent = tmp;
+}
+
+/* ── Regex Tester ── */
+function testRegex() {
+  const pat = document.getElementById('rx-pattern').value;
+  const flags = document.getElementById('rx-flags').value;
+  const txt = document.getElementById('rx-text').value;
+  const errEl = document.getElementById('rx-error');
+  errEl.textContent = '';
+  if (!pat) { document.getElementById('rx-count').textContent='0'; document.getElementById('rx-matches').textContent='—'; document.getElementById('rx-highlighted').innerHTML=''; return; }
+  try {
+    const rx = new RegExp(pat, flags);
+    const matches = txt.match(rx) || [];
+    document.getElementById('rx-count').textContent = matches.length;
+    document.getElementById('rx-matches').textContent = matches.slice(0,12).join(', ') + (matches.length > 12 ? ` … আরো ${matches.length - 12}টা` : '') || '—';
+    const safeFlags = flags.includes('g') ? flags : flags + 'g';
+    const rx2 = new RegExp(pat, safeFlags);
+    document.getElementById('rx-highlighted').innerHTML = txt
+      ? txt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(rx2, m => `<mark>${m.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</mark>`)
+      : '';
+  } catch(e) { errEl.textContent = 'ভুল প্যাটার্ন: ' + e.message; }
+}
+
+/* ── Copy ── */
+function copyText(id, btn) {
+  const txt = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    if (!btn) return;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="ti ti-check"></i> হয়েছে!';
+    setTimeout(() => btn.innerHTML = orig, 1500);
+  });
+}
+</script>
+</body>
+</html>
